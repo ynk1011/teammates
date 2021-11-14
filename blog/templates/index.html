@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<head profile="http://www.w3.org/2005/10/profile"></head>
+		<title>9인9팀</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+		<!-- 부트스트랩(내가가져온거)네브바 모양? -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+		<!-- 원래탬플릿의css들 -->
+		<link rel="stylesheet" href="/static/css/main.css" />
+		<noscript><link rel="stylesheet" href="/static/css/noscript.css" /></noscript>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
+		
+		</head>
+	<body class="is-preload" style="font-family: 'Hahmlet', serif;">
+
+
+
+
+		<div>
+			{% if user.is_authenticated %}
+			{{user.username}}님 환영합니당
+			{% endif %}
+
+		</div>
+		
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header" class="alt">
+						<span class="logo"><img src="https://img.icons8.com/emoji/96/000000/handshake-light-skin-tone.png" /></span>
+						<h1><strong>팀원 구하기 사이트</strong></h1>
+						<p>for ewha CSE students<br />
+						
+					</header>
+				
+
+				
+<br><br>
+
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul>
+							<li><a href="#intro" class="active">1.글쓰기</a></li>
+							<li><a href="#first">2.게시판</a></li>
+							<li><a href="#second">3.검색</a></li>							
+							{% if not user.is_authenticated %}
+							<li><a href="#cta">4.회원가입</a></li>
+							<li><a href="{% url 'login' %}">5.로그인</a></li>
+							{% endif %}
+							{% if user.is_authenticated %}
+							<li><a href="#cta1">4.마이페이지</a></li>
+							<li><a href="{% url 'logout' %}">5.로그아웃</a></li>
+							{% endif %}
+
+
+				
+							
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- 1.글쓰기 -->
+							<section id="intro" class="main">
+								<div class="spotlight">
+									<div class="content">
+										<header class="major">
+											<h2>새 글쓰기</h2>
+										</header>
+										<p>이곳에서 새 글을 작성하여 함께할 팀 또는 팀원을 구해보세요!<br>
+											~ 글에는 반드시 글쓴이의 학번, 재수강여부, 기본적인 요구사항을 포함시켜주세요 ~										
+										</p>
+										<ul class="actions">
+											<li><a href="{% url 'new' %}" class="button">새로운 글 작성하기</a></li>
+										</ul>
+									</div>
+									
+								</div>
+							</section>
+
+							
+						<!-- 2.게시판 -->
+							<section id="first" class="main special">
+								<header class="major">
+									<h2>게시판</h2>
+								</header>
+
+								<ul class="statistics">
+									
+									<li class="style1">
+										<span class="icon solid fa-code-branch"></span>
+										<a href = "{% url 'blog_in_category' 'f9046571-29a8-11ec-af6e-0024d6d1dfcf' %}"><strong>오픈sw플랫폼</strong></a>
+									</li>
+									<li class="style2">
+										<span class="icon fa-folder-open"></span>
+										<a href="{% url 'blog_in_category' 'eafc2dcd-29a8-11ec-96c1-0024d6d1dfcf' %}"><strong>캡스톤 디자인 프로젝트</strong></a>
+									</li>
+									<li class="style3">
+										<span class="icon solid fa-signal"></span>
+										<a href="{% url 'blog_in_category' 'e1f8d61d-2a4e-11ec-b142-0024d6d1dfcf' %}"><strong>컴퓨터구조</strong>
+									</li>
+									<li class="style4">
+										<span class="icon solid fa-laptop"></span>
+										<a href="{% url 'blog_in_category' 'ec092db8-2a4e-11ec-a7bc-0024d6d1dfcf' %}"><strong>빅데이터</strong></a>
+									</li>
+									<li class="style5">
+										<span class="icon fa-gem"></span>
+										<a href="{% url 'blog_in_category' '03340457-29a9-11ec-a799-0024d6d1dfcf' %}"><strong>소프트웨어융합창의설계</strong></a>
+									</li>
+								</ul>
+
+
+							</section>
+
+							
+
+						<!-- 3. 검색 -->
+							<section id="second" class="main special">
+								<header class="major">
+									<h2>검색어를 입력하세요</h2>
+								</header>
+
+								<p class="content">
+									<form action="{% url 'search' %}" method="post">
+										{% csrf_token %}
+										<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q"
+											value="{{q}}"><button class="button" type="submit">Search</button>
+									</form>
+								</p>
+								
+							</section>
+
+
+
+						<!-- 4.회원가입 -->
+							<section id="cta" class="main special">
+								<header class="major">
+									<h2>Join Us!</h2>
+									<p>글과 댓글의 열람, 댓글 작성, 북마크(글저장) 기능은 회원에게만 제공됩니다!</p>
+								</header>
+								<footer class="major">
+									<ul class="actions special">
+										<li><a href="{% url 'register' %}" class="button primary">회원가입</a></li>
+					
+									</ul>
+								</footer>
+							</section>
+
+
+						<!-- 5.마이페이지 -->
+						<section id="cta1" class="main special">
+							<header class="major">
+								<h2>마이페이지</h2>
+								<p>내가 작성한 글과 저장한 글을 모아보는 페이지입니다!</p>
+							</header>
+							<footer class="major">
+								<ul class="actions special">
+									<li><a href="{% url 'mypage' %}" class="button primary">내가 쓴 글</a></li>
+									<li><a href="{% url 'mypageBookmark' %}" class="button">저장한 글</a></li>
+								</ul>
+								<br>
+								<br>
+								<br>
+							</footer>
+						</section>
+
+					</div>
+
+				
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="/static/js/jquery.min.js"></script>
+			<script src="/static/js/jquery.scrollex.min.js"></script>
+			<script src="/static/js/jquery.scrolly.min.js"></script>
+			<script src="/static/js/browser.min.js"></script>
+			<script src="/static/js/breakpoints.min.js"></script>
+			<script src="/static/js/util.js"></script>
+			<script src="/static/js/main.js"></script>
+			<script src="/static/js/common.js"></script>
+
+	</body>
+</html>
